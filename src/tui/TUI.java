@@ -1,17 +1,29 @@
 package tui;
 
+import org.jline.utils.AttributedStringBuilder;
+import org.jline.utils.AttributedStyle;
+
 public interface TUI {
-	String RESET = "\u001B[0m";
 
-	default void printRGB(String text, int r, int g, int b) {
-		System.out.println(text + "\u001B[38;2;" + r + ";" + g + ";" + b + "m" + RESET);
+	// Print the default system texts
+	default void printSystemPrompt(String text) {
+		AttributedStyle system = AttributedStyle.DEFAULT.foreground(AttributedStyle.CYAN);
+		System.out.println(new AttributedStringBuilder().append(text, system).toAnsi());
 	}
 
-	default void setBackground(int r, int g, int b) {
-		System.out.println("\u001B[48;2;" + r + ";" + g + ";" + b + "m" + RESET);
+	default void printSystemErr(String text) {
+		AttributedStyle system = AttributedStyle.DEFAULT.foreground(AttributedStyle.RED);
+		System.out.println(new AttributedStringBuilder().append(text, system).toAnsi());
 	}
 
-	default void resetBackground() {
-		System.out.println(RESET);
+	default void printPlayer(String text) {
+		AttributedStyle player = AttributedStyle.DEFAULT.background(AttributedStyle.WHITE)
+				.foreground(AttributedStyle.BLACK);
+		System.out.println("You: " + new AttributedStringBuilder().append(text, player).toAnsi());
+	}
+
+	default void printThought(String text) {
+		AttributedStyle think = AttributedStyle.DEFAULT.italic().bold();
+		System.out.println("You [Thinking] : " + new AttributedStringBuilder().append(text, think).toAnsi());
 	}
 }
