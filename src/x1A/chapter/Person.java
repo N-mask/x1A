@@ -17,6 +17,7 @@ public class Person {
 
 	// Get a description of the person based on features
 	public String getDescription() {
+
 		return name;
 
 	}
